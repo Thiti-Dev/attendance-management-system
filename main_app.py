@@ -74,10 +74,11 @@ def take_img():
                     cv2.imwrite("TrainingImage/ " + Name + "." + Enrollment + '.' + str(sampleNum) + ".jpg",
                                 gray[y:y + h, x:x + w])
                     cv2.imshow('Frame', img)
+                    cv2.putText(img, str("Total Image Captured: 0") + "%", (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 25, 255), 4)
                 # wait for 100 miliseconds
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
-                # break if the sample number is morethan 100
+                # break if the sample number is morethan 70
                 elif sampleNum > 70:
                     break
             cam.release()
@@ -329,6 +330,8 @@ def RegisterStudent():
                     ret, img = cam.read()
                     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                     faces = detector.detectMultiScale(gray, 1.3, 5)
+
+                    cv2.putText(img, str("Total Image Captured: " + str(sampleNum)), (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 25, 255), 4)
                     for (x, y, w, h) in faces:
                         cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
                         # incrementing sample number
@@ -341,7 +344,7 @@ def RegisterStudent():
                     if cv2.waitKey(1) & 0xFF == ord('q'):
                         break
                     # break if the sample number is morethan 100
-                    elif sampleNum > 70:
+                    elif sampleNum > 100:
                         break
                 cam.release()
                 cv2.destroyAllWindows()
